@@ -1,0 +1,39 @@
+# Section de configuration du serveur
+server:
+  # Gestion des erreurs du serveur
+  error:
+    include-message: always  # Inclure toujours le message d'erreur dans la r�ponse
+    include-binding-errors: always  # Inclure tjrs les d�tailes des erreurs de liaison
+
+# Section de configuration de la source de donn�es
+spring:
+  mail:
+    # Configuration du serveur SMTP
+    host: smtp.gmail.com  # Serveur SMTP de Gmail
+    port: 587     # Port TLS pour Gmail
+    username: email@gmail.com   # Adresse Email de l'expéditeur
+    password: password    # Mot de passe de l'email ( à securiser en production )
+    protocol: smtp  # protocole utilisé
+
+    # Propriétés supplémentaires
+    properties:
+      mail:
+        smtp:
+          auth: true  # authentification requise
+          starttls:
+            enable: true  # Activer le chiffrement TLS
+  datasource:
+    password: Asmae@123
+    url: jdbc:mysql://localhost:3306/authentification
+    username: root
+
+
+
+  # Cette section est optionnelle : elle concerne comment communiquer avec la BD en utilisant JPA et Hibernate
+  jpa:
+    hibernate: # Configuration sp�cifique � Hibernate ( impl�mentation de JPA )
+      ddl-auto: update  # Met automatiquement � jour le sch�ma de la BDD au d�marrage, et ajoute les nouvelles tables/champs mais ne supprime pas les anciens
+    properties:
+        hibernate:
+          format_sql: true  # Formater le SQl er g�n�r� pour le re,dre plus lisible
+    show-sql: true  # Affichage dans les logs les requ�tes SQL ex�cut�es
