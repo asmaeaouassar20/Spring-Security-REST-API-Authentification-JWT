@@ -1,43 +1,46 @@
-####  Ce dépôt a pour but de démontrer l'intégration de Spring Security dans une application web Spring Boot utilisant Thymeleaf comme moteur de templates, plus précisement on a appris à :
-- Créer des pages de **login** et **signup** personnalisées.
-- Afficher les informations de l'utilisateur connecté.
-- L'utilisateur connecté peut modifier ses informations personnelles.
-- Un bouton de déconnexion
+## Tester les endpoints de l'API REST avec Postman
 
-<br><br><br>
-Par défaut, lorsque vous lancez l'application (`mvn spring-boot:run`), vous êtes redirigé automatiquement vers la page de login.
-<img width="502" height="502" alt="image" src="https://github.com/user-attachments/assets/659ac19c-b1e2-4067-a2b9-cd9456623527" />
+#### L'inscription d'un utilisateur sans authorisation requise
+<img width="738" height="277" alt="image" src="https://github.com/user-attachments/assets/0a9cf2ff-1ee2-4ea2-a72d-2a3abf5c82b8" />
 
-<br><br><br><br><br><br>
+<br><br><br><br>
 
-Un lien **"Register"** est disponible sur la page de login, permettant aux nouveaux utilisateurs de s'inscrire
-<img width="502" height="502" alt="image" src="https://github.com/user-attachments/assets/bb731884-5dbc-4159-9882-bb5e02a8332b" />
-
-<br><br><br><br><br><br>
-
-Si une URL est inaccessible après connexion, une page d'erreur 404 s'affiche automatiquement.
-<img width="450" height="450" alt="image" src="https://github.com/user-attachments/assets/1807f65f-63bc-490b-92eb-3506e1f442e9" />
-
-<br><br><br><br><br><br>
-
-Lorsqu'on tape le lien suivant dans le navigateur `http://localhost:8080`, 'application affiche par défaut cette **landing page** 
-<img width="955" height="500" alt="image" src="https://github.com/user-attachments/assets/3b8b36bf-e03b-4d7b-af5d-5b56497eed71" />
-
-<br><br><br><br><br><br>
-
-La page de profil de **l'utilisateur connecté** est accessible à l'adresse :  `http://localhost:8080/profile`
-<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/317e90e1-da1a-4fc8-836a-989a8ed252df" />
+#### Cela affiche le message suivant
+<img width="766" height="437" alt="image" src="https://github.com/user-attachments/assets/457e7c3b-dfa6-4049-b298-a569369aada6" />
 
 
-<br><br><br><br><br><br>
+<br><br><br><br>
 
-**L'utilisateur connecté** peut mettre à jour ses informations via :  `http://localhost:8080/profile/update`
-<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/3ec8cd9d-2461-4c4c-8df1-ad0a2a4c330e" />
+#### L'utilisateur est stocké dans la base de données
+<img width="540" height="83" alt="image" src="https://github.com/user-attachments/assets/ef2388d1-d1e5-46fd-a917-310a270c20e5" />
+
+
+<br><br><br><br>
+
+####  Login avec des identifiants incorrects
+<img width="717" height="426" alt="image" src="https://github.com/user-attachments/assets/6861220e-0254-4e42-ace9-7eb44d810d8a" />
 
 
 
-<br><br><br><br><br><br>
 
-Si l'utilisateur clique sur le bouton de déconnexion, il sera redirigé vers la page de **login**
+<br><br><br><br>
+
+####  Login avec des identifiants corrects, cela génère un token
+<img width="1541" height="496" alt="image" src="https://github.com/user-attachments/assets/89419b20-fd3a-41fd-af87-975c7dbfcf6c" />
+
+
+
+<br><br><br><br>
+
+####  Accès à mon profile sans authentification est impossible, car l'URL : 'http://localhost:8080/api/auth/me' est sécurisé
+<img width="1691" height="463" alt="image" src="https://github.com/user-attachments/assets/39b2fd2d-3a6e-4c02-b0e2-9fa1d835494b" />
+
+
+<br><br><br><br>
+
+####  On utilise le token généré pour accéder à mon profile
+<img width="1696" height="442" alt="image" src="https://github.com/user-attachments/assets/1e52a920-f69d-4add-9092-62e266348535" />
+
+
 
 
