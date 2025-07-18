@@ -14,11 +14,24 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.function.Function;
 
+/**
+ * Cete classe es utilitaire pour la gestion des JWT (JSON Web Tokens) dans une application Spring Boot
+ */
+
 @Component
 public class JwtUtil {
-    private String secret = "mySecretKeyThatIsLongEnoughForHS256Algorithm";
-    private int jwtExpirationInMs = 86400000; // 24 heures
 
+    // Clé secrète utilisée pour signer les tokens (doit être modifié, car elle est codée ici en dur, ce n'est pas idéal pour la production)
+    private String secret = "mySecretKeyThatIsLongEnoughForHS256Algorithm";
+    private int jwtExpirationInMs = 86400000; // 24 heures => Durée de validité des tokens
+
+
+    /**
+     * Génération du token
+     *  -> Créer un JWT avec le sujet username
+     *  -> Date d'émission et d'expiration
+     *  -> SIgné avec l'algorithme HS256
+     */
     public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
@@ -28,28 +41,45 @@ public class JwtUtil {
                 .compact();
     }
 
+
+
+    // Récupération du sujet
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
+    /*****   Méthodes pour extraire des informations  ******/
+
+    // Récupération de la date d'expiration
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 
+
+    // Méthode générique pour extraire n'importe quelle claim
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
+
+    // Parser le token et retourne toutes les claims (càd analyser/décoder le jeton et retourner toutes les informations qu'il contient (les claims)
     private Claims extractAllClaims(String token) {
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     }
 
-    private Boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
-    }
+
+
+
+
+
+
+
+
+    /********* Méthodes pour valider le token   **********/
 
     // Méthode validateToken qui prend un UserDetails en paramètre
+    // Permet de valider le nom d'utilisateur et l'expiration
     public Boolean validateToken(String token, UserDetails userDetails) {
         try {
             final String username = extractUsername(token);
@@ -68,7 +98,10 @@ public class JwtUtil {
         return false;
     }
 
+
+
     // Méthode alternative qui valide seulement le token sans UserDetails
+    // Vérifier seulement la signature et l'expiration
     public Boolean validateToken(String token) {
         try {
             extractAllClaims(token);
@@ -87,7 +120,20 @@ public class JwtUtil {
         return false;
     }
 
+
+
+
+
+
+
+
     // Méthode pour vérifier si le token est valide pour un utilisateur spécifique
+
+
+    private Boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
+    }
+
     public boolean isTokenValid(String token, String username) {
         try {
             return extractUsername(token).equals(username) && !isTokenExpired(token);
